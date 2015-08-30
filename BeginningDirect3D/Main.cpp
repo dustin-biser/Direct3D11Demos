@@ -38,7 +38,7 @@ int WINAPI wWinMain (
 	// Now create the window from the previously registered class "DX11WindowClass"
 	HWND hwnd = CreateWindowA(
 		"DX11WindowClass",
-		"Blank 32 Window",
+		"Blank Direct3D Window",
 		WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,
@@ -89,15 +89,18 @@ LRESULT CALLBACK WndProc(
 
 	switch (message) {
 	case WM_PAINT:
+		//-- Draw window background:
 		hDC = BeginPaint(hwnd, &paintStruct);
 		EndPaint(hwnd, &paintStruct);
 		break;
 
 	case WM_DESTROY: 
+		// Send a WM_QUIT message to terminate our application loop within wWinMain().
 		PostQuitMessage(0);
 		break;
 
 	default:
+		// Pass unprocessed messages to the default windows procedure callback.
 		return DefWindowProc(hwnd, message, wParam, lParam);
 	}
 
