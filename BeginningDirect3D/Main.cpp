@@ -1,7 +1,14 @@
 #include <Windows.h>
 
-WNDPROC WndProc = 0;
+// Forward Declaration
+LRESULT CALLBACK WndProc(
+	HWND hwnd,
+	UINT message,
+	WPARAM wParam,
+	LPARAM lParam
+);
 
+//---------------------------------------------------------------------------------------
 int WINAPI wWinMain (
 	HINSTANCE hInstance,
 	HINSTANCE prevInstance,
@@ -21,12 +28,14 @@ int WINAPI wWinMain (
 	wndClass.lpszMenuName = NULL;
 	wndClass.lpszClassName = "DX11WindowClass";
 
+	// Register a window class with name "DX11WindowClass"
 	if (!RegisterClassEx(&wndClass))
 		return -1;
 
 	RECT rc = {0, 0, 640, 480};
 	AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
 
+	// Now create the window from the previously registered class "DX11WindowClass"
 	HWND hwnd = CreateWindowA(
 		"DX11WindowClass",
 		"Blank 32 Window",
@@ -47,6 +56,50 @@ int WINAPI wWinMain (
 
 	ShowWindow(hwnd, cmdShow);
 
+	
+	MSG msg = { 0 };
+
+	while (msg.message != WM_QUIT) {
+		if (PeekMessage(&msg, 0, 0, 0, PM_REMOVE)) {
+			// Translates input virtual key messages to ascii char key messages.
+			TranslateMessage(&msg);
+
+			// Disptach message to our registered Window Procedure Callback function.
+			DispatchMessage(&msg);
+		} 
+		else {
+			// Update
+			// Draw
+		}
+	}
+
+
+	return static_cast<int>(msg.wParam);
+}
+
+//---------------------------------------------------------------------------------------
+LRESULT CALLBACK WndProc(
+	HWND hwnd,
+	UINT message,
+	WPARAM wParam,
+	LPARAM lParam
+) {
+	PAINTSTRUCT paintStruct;
+	HDC hDC;
+
+	switch (message) {
+	case WM_PAINT:
+		hDC = BeginPaint(hwnd, &paintStruct);
+		EndPaint(hwnd, &paintStruct);
+		break;
+
+	case WM_DESTROY: 
+		PostQuitMessage(0);
+		break;
+
+	default:
+		return DefWindowProc(hwnd, message, wParam, lParam);
+	}
 
 	return 0;
 }
