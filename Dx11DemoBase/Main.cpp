@@ -1,9 +1,17 @@
+#ifdef _WIN32
+	// Allow use of freopen() without compilation warnings/errors.
+	#define _CRT_SECURE_NO_DEPRECATE
+	#include <cstdio>
+#endif
+
 #include "BlankDemo.hpp"
+#include "Exception.hpp"
 
 #include <Windows.h>
 
 #include <memory>
 #include <iostream>
+using namespace std;
 
 // Forward Declaration
 LRESULT CALLBACK WndProc(
@@ -20,6 +28,15 @@ int WINAPI wWinMain (
 	LPWSTR cmdLine,
 	int cmdShow
 ) {
+	// Open a new console window
+	AllocConsole();
+
+	//-- Associate std input/output with newly opened console window:
+	freopen("CONIN$", "r", stdin);
+	freopen("CONOUT$", "w", stdout);
+	freopen("CONOUT$", "w", stderr);
+
+
 	//-- Unused parameters:
 	UNREFERENCED_PARAMETER(prevInstance);
 	UNREFERENCED_PARAMETER(cmdLine);
