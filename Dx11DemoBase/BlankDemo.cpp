@@ -1,7 +1,14 @@
 #include "BlankDemo.hpp"
 
+
 //---------------------------------------------------------------------------------------
-BlankDemo::BlankDemo() {
+BlankDemo::BlankDemo (
+	uint width,
+	uint height, 
+	std::wstring name
+) : 
+	Dx11DemoBase(width, height, name)
+{
 
 }
 

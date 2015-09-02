@@ -123,13 +123,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BlankDemo.hpp" />
-    <ClInclude Include="DxD11DemoBase.hpp" />
+    <ClInclude Include="Dx11DemoBase.hpp" />
     <ClInclude Include="Exception.hpp" />
     <ClInclude Include="NumericalTypes.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BlankDemo.cpp" />
-    <ClCompile Include="DxD11DemoBase.cpp" />
+    <ClCompile Include="Dx11DemoBase.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

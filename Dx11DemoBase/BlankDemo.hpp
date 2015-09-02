@@ -1,10 +1,14 @@
 #pragma once
 
-#include "DxD11DemoBase.hpp" 
+#include "Dx11DemoBase.hpp" 
 
-class BlankDemo : public DxD11DemoBase {
+class BlankDemo : public Dx11DemoBase {
 public:
-	BlankDemo();
+	BlankDemo (
+		uint width,
+		uint height,
+		std::wstring name
+	);
 
 	virtual ~BlankDemo();
 
