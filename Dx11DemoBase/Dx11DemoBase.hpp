@@ -4,8 +4,10 @@
 
 #include <string>
 
+#include <wrl.h>
 #include <d3d11.h>
 
+using namespace Microsoft::WRL;
 
 class Dx11DemoBase {
 public:
@@ -31,8 +33,6 @@ public:
 		LPARAM lParam
 	);
 
-
-	// Calls UnloadContent() and releases DirectX COM resources.
 	void Shutdown();
 
 	virtual bool LoadContent();
@@ -41,18 +41,19 @@ public:
 	virtual void Render() = 0;
 
 protected:
-	//-- Viewpoert dimensions:
-	uint width;
-	uint height;
+	//-- Viewport dimensions:
+	uint m_width;
+	uint m_height;
 
-	HWND hwnd;
+	HWND m_hwnd;
 
-	D3D_DRIVER_TYPE driverType;
-	D3D_FEATURE_LEVEL featureLevel;
-	ID3D11Device * d3dDevice;
-	ID3D11DeviceContext * d3dContext;
-	IDXGISwapChain * swapChain;
-	ID3D11RenderTargetView * backBufferTarget; 
+	D3D_DRIVER_TYPE m_driverType;
+	D3D_FEATURE_LEVEL m_featureLevel;
+
+	ComPtr<ID3D11Device> m_d3dDevice;
+	ComPtr<IDXGISwapChain> m_swapChain;
+	ComPtr<ID3D11DeviceContext> m_d3dContext;
+	ComPtr<ID3D11RenderTargetView> m_backBufferTarget; 
 
 private:
 	void MainApplicationLoop(MSG & msg);

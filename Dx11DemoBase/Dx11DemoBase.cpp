@@ -10,6 +10,7 @@
 
 #include <vector>
 #include <iostream>
+#include <cassert>
 using std::cerr;
 using std::endl;
 
@@ -21,14 +22,10 @@ Dx11DemoBase::Dx11DemoBase (
 	uint height,
 	std::wstring name
 ) : 
-	  width(width),
-	  height(height),
-	  driverType(D3D_DRIVER_TYPE_NULL),
-	  featureLevel(D3D_FEATURE_LEVEL_11_0),
-	  d3dDevice(nullptr),
-	  d3dContext(nullptr),
-	  swapChain(nullptr),
-	  backBufferTarget(nullptr)
+	  m_width(width),
+	  m_height(height),
+	  m_driverType(D3D_DRIVER_TYPE_NULL),
+	  m_featureLevel(D3D_FEATURE_LEVEL_11_0)
 {
 
 }
@@ -66,11 +63,16 @@ int Dx11DemoBase::Run (
 	if (!RegisterClassEx(&wndClass))
 		return -1;
 
-	RECT windowRect = {0, 0, width, height};
+	RECT windowRect = {
+		0L, 
+		0L, 
+		static_cast<long>(m_width), 
+		static_cast<long>(m_height)
+	};
 	AdjustWindowRect(&windowRect, WS_OVERLAPPEDWINDOW, FALSE);
 
 	// Now create the window from the previously registered "DX11WindowClass" class 
-	hwnd = CreateWindowA(
+	m_hwnd = CreateWindowA(
 		"DX11WindowClass",
 		"Blank Direct3D Window",
 		WS_OVERLAPPEDWINDOW,
@@ -85,10 +87,10 @@ int Dx11DemoBase::Run (
 	);
 
 
-	if (!hwnd)
+	if (!m_hwnd)
 		return -1;
 
-	ShowWindow(hwnd, nCmdShow);
+	ShowWindow(m_hwnd, nCmdShow);
 	
 	MSG msg = { 0 };
 
@@ -101,7 +103,7 @@ int Dx11DemoBase::Run (
 		cerr << e.what() << endl;
 	}
 	catch (...) {
-		cerr << "Unrecognized exception caught" << endl;
+		cerr << "Unrecognized exception caught!" << endl;
 	}
 
 	// Release resources
@@ -114,15 +116,15 @@ int Dx11DemoBase::Run (
 void Dx11DemoBase::MainApplicationLoop(MSG & msg) {
 	while (msg.message != WM_QUIT) {
 		if (PeekMessage(&msg, 0, 0, 0, PM_REMOVE)) {
-			// Translates input virtual key messages to ascii char key messages.
+			// Translates input virtual key messages to ASCII char key messages.
 			TranslateMessage(&msg);
 
-			// Disptach message to our registered Window Procedure Callback function.
+			// Dispatch message to our registered Window Procedure Callback function.
 			DispatchMessage(&msg);
 		}
 		else {
 			float dt = 0.0f;
-			//-- Call overriden child-class methods:
+			//-- Call overridden child-class methods:
 			Update(dt);
 			Render();
 		}
@@ -130,10 +132,10 @@ void Dx11DemoBase::MainApplicationLoop(MSG & msg) {
 }
 
 //---------------------------------------------------------------------------------------
-void Dx11DemoBase::Initialize () {
+void Dx11DemoBase::Initialize() {
 	//-- Get the dimensions of the client window:
 	RECT dimensions;
-	GetClientRect(hwnd, &dimensions);
+	GetClientRect(m_hwnd, &dimensions);
 
 	uint windowWidth = dimensions.right - dimensions.left;
 	uint windowHeight = dimensions.bottom - dimensions.top;
@@ -161,7 +163,7 @@ void Dx11DemoBase::Initialize () {
 	swapChainDesc.BufferDesc.RefreshRate.Numerator = 60;
 	swapChainDesc.BufferDesc.RefreshRate.Denominator = 1;
 	swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-	swapChainDesc.OutputWindow = hwnd;
+	swapChainDesc.OutputWindow = m_hwnd;
 	swapChainDesc.Windowed = true;
 	swapChainDesc.SampleDesc.Count = 1;
 	swapChainDesc.SampleDesc.Quality = 0;
@@ -182,39 +184,36 @@ void Dx11DemoBase::Initialize () {
 			totalFeatureLevels,
 			D3D11_SDK_VERSION,
 			&swapChainDesc,
-			&swapChain,
-			&d3dDevice,
-			&featureLevel,
-			&d3dContext
+			&m_swapChain,
+			&m_d3dDevice,
+			&m_featureLevel,
+			&m_d3dContext
 		);
 
 		if (SUCCEEDED(result)) {
-			driverType = driverTypes[driverIndex];
+			m_driverType = driverTypes[driverIndex];
 			break;
 		}
 	}
-
-
 	if (FAILED(result)) {
 		throw Exception("Failed to create the Direct3D device.");
 	}
 
 	ID3D11Texture2D * backBufferTexture;
-	result = swapChain->GetBuffer( 0, __uuidof(ID3D11Texture2D), 
-			reinterpret_cast<LPVOID *>(&backBufferTexture) );
+	result = m_swapChain->GetBuffer(0, IID_PPV_ARGS(&backBufferTexture));
 	if (FAILED(result)) {
 		throw Exception("Failed to get swap chain back buffer!");
 	}
 
-	result = d3dDevice->CreateRenderTargetView(backBufferTexture, 0, &backBufferTarget);
-
-	if (backBufferTexture) backBufferTexture->Release();
-
+	result = m_d3dDevice->CreateRenderTargetView(backBufferTexture, nullptr, &m_backBufferTarget);
 	if (FAILED(result)) {
 		throw Exception("Failed to create the Render Target View!");
 	}
 
-	d3dContext->OMSetRenderTargets(1, &backBufferTarget, 0);
+	if (backBufferTexture) backBufferTexture->Release();
+
+	m_d3dContext->OMSetRenderTargets(1, m_backBufferTarget.GetAddressOf(), nullptr);
+	assert(m_backBufferTarget);
 
 	D3D11_VIEWPORT viewport;
 	viewport.Width = static_cast<float>(windowWidth);
@@ -224,7 +223,7 @@ void Dx11DemoBase::Initialize () {
 	viewport.TopLeftX = 0.0f;
 	viewport.TopLeftY = 0.0f;
 
-	d3dContext->RSSetViewports(1, &viewport);
+	m_d3dContext->RSSetViewports(1, &viewport);
 
 	LoadContent();
 }
@@ -233,16 +232,6 @@ void Dx11DemoBase::Initialize () {
 void Dx11DemoBase::Shutdown()
 {
 	UnloadContent();
-
-	if (backBufferTarget) backBufferTarget->Release();
-	if (swapChain) swapChain->Release();
-	if (d3dContext) d3dContext->Release();
-	if (d3dDevice) d3dDevice->Release();
-
-	d3dDevice = nullptr;
-	d3dContext = nullptr;
-	swapChain = nullptr;
-	backBufferTarget = nullptr;
 }
 
 //---------------------------------------------------------------------------------------

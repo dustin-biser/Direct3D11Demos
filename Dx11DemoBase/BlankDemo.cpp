@@ -1,5 +1,7 @@
 #include "BlankDemo.hpp"
 
+#include <cassert>
+
 
 //---------------------------------------------------------------------------------------
 BlankDemo::BlankDemo (
@@ -34,15 +36,15 @@ void BlankDemo::Update(float dt) {
 
 //---------------------------------------------------------------------------------------
 void BlankDemo::Render() {
-	if (!d3dContext) return;
+	if (!m_d3dContext) return;
 
 	float clearColor[4] = { 0.0f, 0.0f, 0.25f, 1.0f };
 
 	// Clear the back buffer with the clearColor.
-	d3dContext->ClearRenderTargetView(backBufferTarget, clearColor);
+	m_d3dContext->ClearRenderTargetView(m_backBufferTarget.Get(), clearColor);
 
 	// Do any additional rendering here.
 
 	// Swap the back and front buffers.
-	swapChain->Present(0, 0);
+	m_swapChain->Present(0, 0);
 }
