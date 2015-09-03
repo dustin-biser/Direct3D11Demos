@@ -1,7 +1,10 @@
 **Debug
 **Release
+**x64
 **.exe
 **.suo
 **.vs
 **.sdf
 **.opensdf
+**.vcxproj.filters
+**.vcxproj.user
