@@ -68,7 +68,12 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>../Utils;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>../Utils;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -122,12 +127,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Utils\dxerr.h" />
     <ClInclude Include="BlankDemo.hpp" />
     <ClInclude Include="Dx11DemoBase.hpp" />
     <ClInclude Include="Exception.hpp" />
     <ClInclude Include="NumericalTypes.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Utils\dxerr.cpp" />
     <ClCompile Include="BlankDemo.cpp" />
     <ClCompile Include="Dx11DemoBase.cpp" />
     <ClCompile Include="Main.cpp" />
