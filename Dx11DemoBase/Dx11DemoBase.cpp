@@ -7,6 +7,8 @@
 #include "Dx11DemoBase.hpp"
 #include "NumericalTypes.hpp"
 #include "Exception.hpp"
+#include "Utils/CheckDxError.hpp"
+#include "Utils/DebugMessage.hpp"
 
 #include <vector>
 #include <iostream>
@@ -15,6 +17,7 @@ using std::cerr;
 using std::endl;
 
 #include <dxgi.h>
+
 
 //---------------------------------------------------------------------------------------
 Dx11DemoBase::Dx11DemoBase (
@@ -41,13 +44,16 @@ int Dx11DemoBase::Run (
 	HINSTANCE hInstance,
 	int nCmdShow
 ) {
-	// Open a new console window
-	AllocConsole();
+	//-- Use the following code to open a new console window and redirect stdout to it:
+	{
+		//// Open a new console window
+		//AllocConsole();
 
-	//-- Associate std input/output with newly opened console window:
-	freopen("CONIN$", "r", stdin);
-	freopen("CONOUT$", "w", stdout);
-	freopen("CONOUT$", "w", stderr);
+		////-- Associate std input/output with newly opened console window:
+		//freopen("CONIN$", "r", stdin);
+		//freopen("CONOUT$", "w", stdout);
+		//freopen("CONOUT$", "w", stderr);
+	}
 
 	WNDCLASSEX wndClass = { 0 };
 	wndClass.cbSize = sizeof(WNDCLASSEX);
@@ -94,17 +100,9 @@ int Dx11DemoBase::Run (
 	
 	MSG msg = { 0 };
 
-	try {
-		Initialize();
+	Initialize();
 
-		MainApplicationLoop(msg);
-	}
-	catch (const std::exception & e) {
-		cerr << e.what() << endl;
-	}
-	catch (...) {
-		cerr << "Unrecognized exception caught!" << endl;
-	}
+	MainApplicationLoop(msg);
 
 	// Release resources
 	Shutdown();
@@ -196,19 +194,18 @@ void Dx11DemoBase::Initialize() {
 		}
 	}
 	if (FAILED(result)) {
-		throw Exception("Failed to create the Direct3D device.");
+		DEBUG_MSG(L"Failed to create the Direct3D device.");
 	}
 
-	ID3D11Texture2D * backBufferTexture;
-	result = m_swapChain->GetBuffer(0, IID_PPV_ARGS(&backBufferTexture));
-	if (FAILED(result)) {
-		throw Exception("Failed to get swap chain back buffer!");
-	}
+	ID3D11Texture2D * backBufferTexture = nullptr;
 
-	result = m_d3dDevice->CreateRenderTargetView(backBufferTexture, nullptr, &m_backBufferTarget);
-	if (FAILED(result)) {
-		throw Exception("Failed to create the Render Target View!");
-	}
+	CHECK_DX_ERROR(
+		m_swapChain->GetBuffer(0, IID_PPV_ARGS(&backBufferTexture))
+	);
+
+	CHECK_DX_ERROR(
+		m_d3dDevice->CreateRenderTargetView(backBufferTexture, nullptr, &m_backBufferTarget);
+	);
 
 	if (backBufferTexture) backBufferTexture->Release();
 

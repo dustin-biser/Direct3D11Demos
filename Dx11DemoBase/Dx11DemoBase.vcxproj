@@ -132,12 +132,16 @@
     <ClInclude Include="Dx11DemoBase.hpp" />
     <ClInclude Include="Exception.hpp" />
     <ClInclude Include="NumericalTypes.hpp" />
+    <ClInclude Include="Utils\CheckDxError.hpp" />
+    <ClInclude Include="Utils\DebugMessage.hpp" />
+    <ClInclude Include="Utils\StringUtils.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Utils\dxerr.cpp" />
     <ClCompile Include="BlankDemo.cpp" />
     <ClCompile Include="Dx11DemoBase.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Utils\DebugMessage.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
