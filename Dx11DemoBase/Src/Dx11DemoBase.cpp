@@ -1,12 +1,12 @@
 #ifdef _WIN32
 	// Allow use of freopen() without compilation warnings/errors.
+	// For use with customly allocalted console window.
 	#define _CRT_SECURE_NO_DEPRECATE
 	#include <cstdio>
 #endif
 
 #include "Dx11DemoBase.hpp"
 #include "NumericalTypes.hpp"
-#include "Exception.hpp"
 #include "Utils/CheckDxError.hpp"
 #include "Utils/DebugMessage.hpp"
 

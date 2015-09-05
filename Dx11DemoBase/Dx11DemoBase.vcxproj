@@ -18,6 +18,23 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="External\dxerr.h" />
+    <ClInclude Include="Src\BlankDemo.hpp" />
+    <ClInclude Include="Src\Dx11DemoBase.hpp" />
+    <ClInclude Include="Src\NumericalTypes.hpp" />
+    <ClInclude Include="Src\Utils\CheckDxError.hpp" />
+    <ClInclude Include="Src\Utils\DebugMessage.hpp" />
+    <ClInclude Include="Src\Utils\Exception.hpp" />
+    <ClInclude Include="Src\Utils\StringUtils.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="External\dxerr.cpp" />
+    <ClCompile Include="Src\BlankDemo.cpp" />
+    <ClCompile Include="Src\Dx11DemoBase.cpp" />
+    <ClCompile Include="Src\Main.cpp" />
+    <ClCompile Include="Src\Utils\DebugMessage.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{1B1CAD8C-EAB8-426A-A4A4-FA686B3A3011}</ProjectGuid>
     <RootNamespace>Dx11DemoBase</RootNamespace>
@@ -80,6 +97,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Src;External;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -104,6 +122,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Src;External;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -126,23 +145,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="..\Utils\dxerr.h" />
-    <ClInclude Include="BlankDemo.hpp" />
-    <ClInclude Include="Dx11DemoBase.hpp" />
-    <ClInclude Include="Exception.hpp" />
-    <ClInclude Include="NumericalTypes.hpp" />
-    <ClInclude Include="Utils\CheckDxError.hpp" />
-    <ClInclude Include="Utils\DebugMessage.hpp" />
-    <ClInclude Include="Utils\StringUtils.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\Utils\dxerr.cpp" />
-    <ClCompile Include="BlankDemo.cpp" />
-    <ClCompile Include="Dx11DemoBase.cpp" />
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Utils\DebugMessage.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

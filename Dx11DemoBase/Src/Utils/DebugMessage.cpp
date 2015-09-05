@@ -10,7 +10,6 @@ void WINAPI DebugMessage (
 ) {
 	const size_t BUFFER_SIZE(1000);
 	WCHAR strBufferLine[128];
-	WCHAR strBufferError[256];
 	WCHAR strBuffer[BUFFER_SIZE];
 
 	swprintf_s(strBufferLine, 128, L"%lu", dwLine);
