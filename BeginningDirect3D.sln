@@ -5,6 +5,32 @@ VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Dx11DemoBase", "Dx11DemoBase\Dx11DemoBase.vcxproj", "{1B1CAD8C-EAB8-426A-A4A4-FA686B3A3011}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TriangleDemo", "TriangleDemo\TriangleDemo.vcxproj", "{347AE34D-59E0-4CE2-8C7E-E5E2EDF1AD09}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{75464DAB-ED96-42D3-91BF-CC611CAE947C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utils", "Utils", "{1CB95889-D258-4C86-8FC6-681A6C26D3EC}"
+	ProjectSection(SolutionItems) = preProject
+		Shared\Utils\CheckDxError.hpp = Shared\Utils\CheckDxError.hpp
+		Shared\Utils\DebugMessage.cpp = Shared\Utils\DebugMessage.cpp
+		Shared\Utils\DebugMessage.hpp = Shared\Utils\DebugMessage.hpp
+		Shared\Utils\Exception.hpp = Shared\Utils\Exception.hpp
+		Shared\Utils\StringUtils.hpp = Shared\Utils\StringUtils.hpp
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External", "External", "{E5311FAE-1740-4D23-A970-101A494860D0}"
+	ProjectSection(SolutionItems) = preProject
+		External\dxerr.cpp = External\dxerr.cpp
+		External\dxerr.h = External\dxerr.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{8C797171-B054-4B62-8F39-BE7B0F65A6EF}"
+	ProjectSection(SolutionItems) = preProject
+		Shared\Dx11DemoBase.cpp = Shared\Dx11DemoBase.cpp
+		Shared\Dx11DemoBase.hpp = Shared\Dx11DemoBase.hpp
+		Shared\NumericalTypes.hpp = Shared\NumericalTypes.hpp
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,8 +47,21 @@ Global
 		{1B1CAD8C-EAB8-426A-A4A4-FA686B3A3011}.Release|x64.Build.0 = Release|x64
 		{1B1CAD8C-EAB8-426A-A4A4-FA686B3A3011}.Release|x86.ActiveCfg = Release|Win32
 		{1B1CAD8C-EAB8-426A-A4A4-FA686B3A3011}.Release|x86.Build.0 = Release|Win32
+		{347AE34D-59E0-4CE2-8C7E-E5E2EDF1AD09}.Debug|x64.ActiveCfg = Debug|x64
+		{347AE34D-59E0-4CE2-8C7E-E5E2EDF1AD09}.Debug|x64.Build.0 = Debug|x64
+		{347AE34D-59E0-4CE2-8C7E-E5E2EDF1AD09}.Debug|x86.ActiveCfg = Debug|Win32
+		{347AE34D-59E0-4CE2-8C7E-E5E2EDF1AD09}.Debug|x86.Build.0 = Debug|Win32
+		{347AE34D-59E0-4CE2-8C7E-E5E2EDF1AD09}.Release|x64.ActiveCfg = Release|x64
+		{347AE34D-59E0-4CE2-8C7E-E5E2EDF1AD09}.Release|x64.Build.0 = Release|x64
+		{347AE34D-59E0-4CE2-8C7E-E5E2EDF1AD09}.Release|x86.ActiveCfg = Release|Win32
+		{347AE34D-59E0-4CE2-8C7E-E5E2EDF1AD09}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1CB95889-D258-4C86-8FC6-681A6C26D3EC} = {8C797171-B054-4B62-8F39-BE7B0F65A6EF}
+		{E5311FAE-1740-4D23-A970-101A494860D0} = {75464DAB-ED96-42D3-91BF-CC611CAE947C}
+		{8C797171-B054-4B62-8F39-BE7B0F65A6EF} = {75464DAB-ED96-42D3-91BF-CC611CAE947C}
 	EndGlobalSection
 EndGlobal

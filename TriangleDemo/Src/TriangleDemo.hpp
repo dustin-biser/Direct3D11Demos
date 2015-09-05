@@ -1,22 +1,25 @@
 #pragma once
 
-#include "Dx11DemoBase.hpp" 
+#include <Dx11DemoBase.hpp>
 
-class BlankDemo : public Dx11DemoBase {
+class TriangleDemo : public Dx11DemoBase {
 public:
-	BlankDemo (
+
+	TriangleDemo (
 		uint width,
 		uint height,
 		std::string name
 	);
 
-	virtual ~BlankDemo();
+	virtual ~TriangleDemo();
 
 	bool LoadContent();
 
 	void UnloadContent();
 
+	// Inherited via Dx11DemoBase
 	virtual void Update(float dt) override;
 
 	virtual void Render() override;
+
 };

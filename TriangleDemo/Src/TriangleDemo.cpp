@@ -1,44 +1,48 @@
-#include "BlankDemo.hpp"
+#include "TriangleDemo.hpp"
 
-#include <cassert>
 
 
 //---------------------------------------------------------------------------------------
-BlankDemo::BlankDemo(
+TriangleDemo::TriangleDemo (
 	uint width,
 	uint height, 
 	std::string name
-) : 
-	Dx11DemoBase(width, height, name)
+)
+	: Dx11DemoBase(width, height, name)
 {
 
 }
 
 //---------------------------------------------------------------------------------------
-BlankDemo::~BlankDemo() {
+TriangleDemo::~TriangleDemo()
+{
 
 }
 
 //---------------------------------------------------------------------------------------
-bool BlankDemo::LoadContent() {
+bool TriangleDemo::LoadContent()
+{
 	return true;
 }
 
 //---------------------------------------------------------------------------------------
-void BlankDemo::UnloadContent() {
+void TriangleDemo::UnloadContent()
+{
 
 }
 
 //---------------------------------------------------------------------------------------
-void BlankDemo::Update(float dt) {
+void TriangleDemo::Update(float dt)
+{
 
 }
 
 //---------------------------------------------------------------------------------------
-void BlankDemo::Render() {
+void TriangleDemo::Render()
+{
 	if (!m_d3dContext) return;
 
-	float clearColor[4] = { 0.0f, 0.0f, 0.25f, 1.0f };
+	float clearColor[4] = { 0.8f, 0.3f, 0.30f, 1.0f };
 
 	// Clear the back buffer with the clearColor.
 	m_d3dContext->ClearRenderTargetView(m_backBufferTarget.Get(), clearColor);
@@ -47,4 +51,5 @@ void BlankDemo::Render() {
 
 	// Swap the back and front buffers.
 	m_swapChain->Present(0, 0);
+
 }

@@ -23,10 +23,11 @@ using std::endl;
 Dx11DemoBase::Dx11DemoBase (
 	uint width, 
 	uint height,
-	std::wstring name
+	std::string windowTitle
 ) : 
 	  m_width(width),
 	  m_height(height),
+	  m_windowTitle(windowTitle),
 	  m_driverType(D3D_DRIVER_TYPE_NULL),
 	  m_featureLevel(D3D_FEATURE_LEVEL_11_0)
 {
@@ -80,7 +81,7 @@ int Dx11DemoBase::Run (
 	// Now create the window from the previously registered "DX11WindowClass" class 
 	m_hwnd = CreateWindowA(
 		"DX11WindowClass",
-		"Blank Direct3D Window",
+		m_windowTitle.c_str(),
 		WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,
@@ -102,6 +103,7 @@ int Dx11DemoBase::Run (
 
 	Initialize();
 
+	// Begin the main message processing and rendering loop.
 	MainApplicationLoop(msg);
 
 	// Release resources
@@ -219,6 +221,7 @@ void Dx11DemoBase::Initialize() {
 	viewport.MaxDepth = 1.0f;
 	viewport.TopLeftX = 0.0f;
 	viewport.TopLeftY = 0.0f;
+
 
 	m_d3dContext->RSSetViewports(1, &viewport);
 

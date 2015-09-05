@@ -14,7 +14,7 @@ public:
 	Dx11DemoBase (
 		uint width,
 		uint height,
-		std::wstring name
+		std::string windowTitle
 	);
 
 	virtual ~Dx11DemoBase();
@@ -44,6 +44,7 @@ protected:
 	//-- Viewport dimensions:
 	uint m_width;
 	uint m_height;
+	std::string m_windowTitle;
 
 	HWND m_hwnd;
 

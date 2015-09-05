@@ -1,12 +1,11 @@
 #include <Windows.h>
 
-#include "BlankDemo.hpp"
+#include "TriangleDemo.hpp"
 
 //---------------------------------------------------------------------------------------
 _Use_decl_annotations_
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
 {
-	BlankDemo demo(1024, 768, "Blank Direct3d Window");
+	TriangleDemo demo(1024, 768, "Triangle Direct3d Demo");
 	return demo.Run(hInstance, nCmdShow);
 }
-

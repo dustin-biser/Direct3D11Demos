@@ -18,19 +18,9 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Src\BlankDemo.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\External\dxerr.cpp" />
-    <ClCompile Include="..\Shared\Dx11DemoBase.cpp" />
-    <ClCompile Include="..\Shared\Utils\DebugMessage.cpp" />
-    <ClCompile Include="Src\BlankDemo.cpp" />
-    <ClCompile Include="Src\Main.cpp" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{1B1CAD8C-EAB8-426A-A4A4-FA686B3A3011}</ProjectGuid>
-    <RootNamespace>Dx11DemoBase</RootNamespace>
+    <ProjectGuid>{347AE34D-59E0-4CE2-8C7E-E5E2EDF1AD09}</ProjectGuid>
+    <RootNamespace>TriangleDemo</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -79,21 +69,20 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(IncludePath)</IncludePath>
-    <SourcePath>../External;../Shared;$(SourcePath)</SourcePath>
+    <IncludePath>../External;../Shared;$(IncludePath)</IncludePath>
+    <SourcePath>../External;../Shared/Utils;../Shared;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(IncludePath)</IncludePath>
-    <SourcePath>../External;../Shared;$(SourcePath)</SourcePath>
+    <IncludePath>../External;../Shared;$(IncludePath)</IncludePath>
+    <SourcePath>../External;../Shared/Utils;../Shared;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../External;../Shared;Src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ObjectFileName>$(IntDir)%(ProjectName)\</ObjectFileName>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -117,9 +106,8 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../External;../Shared;Src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ObjectFileName>$(IntDir)%(ProjectName)\</ObjectFileName>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -142,6 +130,21 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\External\dxerr.cpp" />
+    <ClCompile Include="..\Shared\Dx11DemoBase.cpp" />
+    <ClCompile Include="..\Shared\Utils\DebugMessage.cpp" />
+    <ClCompile Include="Src\Main.cpp" />
+    <ClCompile Include="Src\TriangleDemo.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\External\dxerr.h" />
+    <ClInclude Include="..\Shared\Dx11DemoBase.hpp" />
+    <ClInclude Include="..\Shared\NumericalTypes.hpp" />
+    <ClInclude Include="..\Shared\Utils\CheckDxError.hpp" />
+    <ClInclude Include="..\Shared\Utils\DebugMessage.hpp" />
+    <ClInclude Include="Src\TriangleDemo.hpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
