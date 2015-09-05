@@ -32,6 +32,7 @@
     <ProjectGuid>{1B1CAD8C-EAB8-426A-A4A4-FA686B3A3011}</ProjectGuid>
     <RootNamespace>Dx11DemoBase</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <ProjectName>BlankDemo</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
