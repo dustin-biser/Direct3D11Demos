@@ -24,6 +24,7 @@ public:
 		int nCmdShow
 	);
 
+protected:
 	void Initialize();
 
 	static LRESULT CALLBACK WindowProc (
@@ -35,12 +36,11 @@ public:
 
 	void Shutdown();
 
-	virtual bool LoadContent();
+	virtual void LoadContent();
 	virtual void UnloadContent();
 	virtual void Update(float dt) = 0;
 	virtual void Render() = 0;
 
-protected:
 	//-- Viewport dimensions:
 	uint m_width;
 	uint m_height;

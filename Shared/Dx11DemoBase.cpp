@@ -1,6 +1,6 @@
 #ifdef _WIN32
 	// Allow use of freopen() without compilation warnings/errors.
-	// For use with customly allocalted console window.
+	// For use with customly allocated console window.
 	#define _CRT_SECURE_NO_DEPRECATE
 	#include <cstdio>
 #endif
@@ -17,6 +17,8 @@ using std::cerr;
 using std::endl;
 
 #include <dxgi.h>
+#include <d3dcompiler.h>
+#include <DirectXMath.h>
 
 
 //---------------------------------------------------------------------------------------
@@ -225,6 +227,10 @@ void Dx11DemoBase::Initialize() {
 
 	m_d3dContext->RSSetViewports(1, &viewport);
 
+	if (!DirectX::XMVerifyCPUSupport()) {
+		DEBUG_MSG(L"Current architecture does not support DirectXMath.");
+	}
+
 	LoadContent();
 }
 
@@ -235,11 +241,9 @@ void Dx11DemoBase::Shutdown()
 }
 
 //---------------------------------------------------------------------------------------
-bool Dx11DemoBase::LoadContent()
+void Dx11DemoBase::LoadContent()
 {
 	// Override with demo specific content loading.
-
-	return true;
 }
 
 //---------------------------------------------------------------------------------------

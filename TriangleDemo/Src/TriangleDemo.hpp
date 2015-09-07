@@ -4,7 +4,6 @@
 
 class TriangleDemo : public Dx11DemoBase {
 public:
-
 	TriangleDemo (
 		uint width,
 		uint height,
@@ -13,13 +12,27 @@ public:
 
 	virtual ~TriangleDemo();
 
-	bool LoadContent();
+protected:
+	void LoadContent();
 
 	void UnloadContent();
 
-	// Inherited via Dx11DemoBase
-	virtual void Update(float dt) override;
+	void CreateVertexShaderObject();
 
+	void CreatePixelShaderObject();
+
+	void UploadVertexBufferData();
+
+	//-- Inherited from Dx11DemoBase:
+	virtual void Update(float dt) override;
 	virtual void Render() override;
+
+
+	//-- Shader Objects:
+	ComPtr<ID3D11VertexShader> m_vertexShader;
+	ComPtr<ID3D11PixelShader> m_pixelShader;
+
+	ComPtr<ID3D11InputLayout> m_inputLayout;
+	ComPtr<ID3D11Buffer> m_vertexBuffer;
 
 };
