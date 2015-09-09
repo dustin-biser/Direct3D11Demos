@@ -7,15 +7,13 @@ public:
 	TriangleDemo (
 		uint width,
 		uint height,
-		std::string name
+		std::string name,
+		float desiredFramesPerSecond = 60.0f
 	);
 
 	virtual ~TriangleDemo();
 
 protected:
-	void LoadContent();
-
-	void UnloadContent();
 
 	void CreateVertexShaderObject();
 
@@ -24,8 +22,10 @@ protected:
 	void UploadVertexBufferData();
 
 	//-- Inherited from Dx11DemoBase:
-	virtual void Update(float dt) override;
-	virtual void Render() override;
+	void LoadContent() override;
+	void UnloadContent() override;
+	void Update(float dt) override;
+	void Render() override;
 
 
 	//-- Shader Objects:

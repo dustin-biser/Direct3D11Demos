@@ -20,6 +20,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External", "External", "{E5
 	ProjectSection(SolutionItems) = preProject
 		External\dxerr.cpp = External\dxerr.cpp
 		External\dxerr.h = External\dxerr.h
+		..\Synergy\examples\Utils\GlfwOpenGlWindow.cpp = ..\Synergy\examples\Utils\GlfwOpenGlWindow.cpp
+		..\Synergy\examples\Utils\GlfwOpenGlWindow.hpp = ..\Synergy\examples\Utils\GlfwOpenGlWindow.hpp
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{8C797171-B054-4B62-8F39-BE7B0F65A6EF}"

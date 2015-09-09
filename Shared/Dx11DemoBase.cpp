@@ -12,9 +12,15 @@
 
 #include <vector>
 #include <iostream>
-#include <cassert>
 using std::cerr;
 using std::endl;
+#include <cassert>
+#include <chrono>
+using std::chrono::milliseconds;
+using std::chrono::duration;
+using std::chrono::steady_clock;
+using std::chrono::duration_cast;
+#include <thread>
 
 #include <dxgi.h>
 #include <d3dcompiler.h>
@@ -25,11 +31,13 @@ using std::endl;
 Dx11DemoBase::Dx11DemoBase (
 	uint width, 
 	uint height,
-	std::string windowTitle
+	std::string windowTitle,
+	float desiredFramesPerSecond
 ) : 
 	  m_width(width),
 	  m_height(height),
 	  m_windowTitle(windowTitle),
+	  m_desiredFramesPerSecond(desiredFramesPerSecond),
 	  m_driverType(D3D_DRIVER_TYPE_NULL),
 	  m_featureLevel(D3D_FEATURE_LEVEL_11_0)
 {
@@ -49,13 +57,13 @@ int Dx11DemoBase::Run (
 ) {
 	//-- Use the following code to open a new console window and redirect stdout to it:
 	{
-		//// Open a new console window
-		//AllocConsole();
+		// Open a new console window
+		AllocConsole();
 
-		////-- Associate std input/output with newly opened console window:
-		//freopen("CONIN$", "r", stdin);
-		//freopen("CONOUT$", "w", stdout);
-		//freopen("CONOUT$", "w", stderr);
+		//-- Associate std input/output with newly opened console window:
+		freopen("CONIN$", "r", stdin);
+		freopen("CONOUT$", "w", stdout);
+		freopen("CONOUT$", "w", stderr);
 	}
 
 	WNDCLASSEX wndClass = { 0 };
@@ -115,8 +123,31 @@ int Dx11DemoBase::Run (
 }
 
 //---------------------------------------------------------------------------------------
+void frameLimiter (
+		float desiredFramesPerSecond,
+		const steady_clock::time_point & frameStartTime
+) {
+	// Convert to milliseconds per frame
+    uint desiredMsPerFrame = uint(1000.0f / desiredFramesPerSecond);
+
+    steady_clock::time_point t2 (steady_clock::now());
+    milliseconds elapsedTime (duration_cast<milliseconds>(t2 - frameStartTime));
+
+	milliseconds d (desiredMsPerFrame);
+    if(elapsedTime < milliseconds(desiredMsPerFrame)) {
+		// TODO Dustin - Build error on this line:
+        std::this_thread::sleep_for(d - elapsedTime);
+    }
+}
+
+//---------------------------------------------------------------------------------------
 void Dx11DemoBase::MainApplicationLoop(MSG & msg) {
+
+	steady_clock::time_point frameStartTime;
+
 	while (msg.message != WM_QUIT) {
+		frameStartTime = steady_clock::now();
+
 		if (PeekMessage(&msg, 0, 0, 0, PM_REMOVE)) {
 			// Translates input virtual key messages to ASCII char key messages.
 			TranslateMessage(&msg);
@@ -126,10 +157,12 @@ void Dx11DemoBase::MainApplicationLoop(MSG & msg) {
 		}
 		else {
 			float dt = 0.0f;
-			//-- Call overridden child-class methods:
+			//-- Call overridden derived-class methods:
 			Update(dt);
 			Render();
 		}
+
+		frameLimiter(m_desiredFramesPerSecond, frameStartTime);
 	}
 }
 

@@ -12,11 +12,7 @@ public:
 
 	virtual ~BlankDemo();
 
-	bool LoadContent();
+	void Update(float dt) override;
 
-	void UnloadContent();
-
-	virtual void Update(float dt) override;
-
-	virtual void Render() override;
+	void Render() override;
 };

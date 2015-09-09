@@ -12,12 +12,11 @@ using namespace DirectX;
 TriangleDemo::TriangleDemo (
 	uint width,
 	uint height, 
-	std::string name
+	std::string name,
+	float desiredFramesPerSecond
 )
-	: Dx11DemoBase(width, height, name)
+	: Dx11DemoBase(width, height, name, desiredFramesPerSecond)
 {
-
-
 
 }
 

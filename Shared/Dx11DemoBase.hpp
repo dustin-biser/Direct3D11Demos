@@ -14,7 +14,8 @@ public:
 	Dx11DemoBase (
 		uint width,
 		uint height,
-		std::string windowTitle
+		std::string windowTitle,
+		float desiredFramesPerSecond = 60.0f
 	);
 
 	virtual ~Dx11DemoBase();
@@ -47,6 +48,8 @@ protected:
 	std::string m_windowTitle;
 
 	HWND m_hwnd;
+
+	float m_desiredFramesPerSecond;
 
 	D3D_DRIVER_TYPE m_driverType;
 	D3D_FEATURE_LEVEL m_featureLevel;
