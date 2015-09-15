@@ -27,6 +27,10 @@ using std::chrono::duration_cast;
 #include <DirectXMath.h>
 
 
+// Forward Declaration:
+static void centerWindow(HWND hWindow);
+
+
 //---------------------------------------------------------------------------------------
 Dx11DemoBase::Dx11DemoBase (
 	uint width, 
@@ -107,19 +111,36 @@ int Dx11DemoBase::Run (
 	if (!m_hwnd)
 		return -1;
 
+	centerWindow(m_hwnd);
 	ShowWindow(m_hwnd, nCmdShow);
 	
-	MSG msg = { 0 };
-
 	Initialize();
 
 	// Begin the main message processing and rendering loop.
+	MSG msg = { 0 };
 	MainApplicationLoop(msg);
 
 	// Release resources
 	Shutdown();
 
 	return static_cast<int>(msg.wParam);
+}
+
+//---------------------------------------------------------------------------------------
+static void centerWindow(HWND hWindow) {
+	RECT windowRect;
+	GetWindowRect(hWindow, &windowRect);
+
+	int windowWidth = windowRect.right - windowRect.left;
+	int windowHeight = windowRect.bottom - windowRect.top;
+
+	int screenWidth = GetSystemMetrics(SM_CXSCREEN);
+	int screenHeight = GetSystemMetrics(SM_CYSCREEN);
+
+	int topLeftXPos = (screenWidth - windowWidth) * 0.5f;
+	int topLeftYPos = (screenHeight - windowHeight) * 0.5f;
+
+	MoveWindow(hWindow, topLeftXPos, topLeftYPos, windowWidth, windowHeight, FALSE);
 }
 
 //---------------------------------------------------------------------------------------
@@ -298,7 +319,6 @@ LRESULT CALLBACK Dx11DemoBase::WindowProc(
 
 	switch (message) {
 	case WM_PAINT:
-		//-- Draw window background:
 		hDC = BeginPaint(hwnd, &paintStruct);
 		EndPaint(hwnd, &paintStruct);
 		break;
