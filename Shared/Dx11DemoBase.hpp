@@ -20,13 +20,13 @@ public:
 
 	virtual ~Dx11DemoBase();
 
-	int Run (
+	int run (
 		HINSTANCE hInstance,
 		int nCmdShow
 	);
 
 protected:
-	void Initialize();
+	void initBase();
 
 	static LRESULT CALLBACK WindowProc (
 		HWND hWnd,
@@ -35,12 +35,10 @@ protected:
 		LPARAM lParam
 	);
 
-	void Shutdown();
-
-	virtual void LoadContent();
-	virtual void UnloadContent();
-	virtual void Update(float dt) = 0;
-	virtual void Render() = 0;
+	virtual void init();
+	virtual void appLogic(float dt) = 0;
+	virtual void render() = 0;
+	virtual void shutdown() = 0;
 
 	//-- Viewport dimensions:
 	uint m_width;

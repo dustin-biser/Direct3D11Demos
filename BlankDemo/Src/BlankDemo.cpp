@@ -20,12 +20,13 @@ BlankDemo::~BlankDemo() {
 }
 
 //---------------------------------------------------------------------------------------
-void BlankDemo::Update(float dt) {
+void BlankDemo::appLogic(float dt)
+{
 
 }
 
 //---------------------------------------------------------------------------------------
-void BlankDemo::Render() {
+void BlankDemo::render() {
 	if (!m_d3dContext) return;
 
 	float clearColor[4] = { 0.0f, 0.0f, 0.25f, 1.0f };
@@ -37,4 +38,11 @@ void BlankDemo::Render() {
 
 	// Swap the back and front buffers.
 	m_swapChain->Present(0, 0);
+}
+
+
+//---------------------------------------------------------------------------------------
+void BlankDemo::shutdown()
+{
+
 }

@@ -12,7 +12,10 @@ public:
 
 	virtual ~BlankDemo();
 
-	void Update(float dt) override;
+	virtual void appLogic(float dt) override;
 
-	void Render() override;
+	virtual void render() override;
+
+	virtual void shutdown() override;
+
 };

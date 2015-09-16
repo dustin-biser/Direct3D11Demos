@@ -51,11 +51,11 @@ Dx11DemoBase::Dx11DemoBase (
 //---------------------------------------------------------------------------------------
 Dx11DemoBase::~Dx11DemoBase() 
 {
-	Shutdown();
+	
 }
 
 //---------------------------------------------------------------------------------------
-int Dx11DemoBase::Run (
+int Dx11DemoBase::run (
 	HINSTANCE hInstance,
 	int nCmdShow
 ) {
@@ -114,14 +114,14 @@ int Dx11DemoBase::Run (
 	centerWindow(m_hwnd);
 	ShowWindow(m_hwnd, nCmdShow);
 	
-	Initialize();
+	initBase();
 
 	// Begin the main message processing and rendering loop.
 	MSG msg = { 0 };
 	MainApplicationLoop(msg);
 
 	// Release resources
-	Shutdown();
+	shutdown();
 
 	return static_cast<int>(msg.wParam);
 }
@@ -179,8 +179,8 @@ void Dx11DemoBase::MainApplicationLoop(MSG & msg) {
 		else {
 			float dt = 0.0f;
 			//-- Call overridden derived-class methods:
-			Update(dt);
-			Render();
+			appLogic(dt);
+			render();
 		}
 
 		frameLimiter(m_desiredFramesPerSecond, frameStartTime);
@@ -188,7 +188,7 @@ void Dx11DemoBase::MainApplicationLoop(MSG & msg) {
 }
 
 //---------------------------------------------------------------------------------------
-void Dx11DemoBase::Initialize() {
+void Dx11DemoBase::initBase() {
 	//-- Get the dimensions of the client window:
 	RECT dimensions;
 	GetClientRect(m_hwnd, &dimensions);
@@ -285,26 +285,15 @@ void Dx11DemoBase::Initialize() {
 		DEBUG_MSG(L"Current architecture does not support DirectXMath.");
 	}
 
-	LoadContent();
+	// Initialize derived class
+	init();
 }
 
-//---------------------------------------------------------------------------------------
-void Dx11DemoBase::Shutdown()
-{
-	UnloadContent();
-}
 
 //---------------------------------------------------------------------------------------
-void Dx11DemoBase::LoadContent()
+void Dx11DemoBase::init()
 {
 	// Override with demo specific content loading.
-}
-
-//---------------------------------------------------------------------------------------
-void Dx11DemoBase::UnloadContent()
-{
-	// Override with demo specific content unloading.
-
 }
 
 //---------------------------------------------------------------------------------------

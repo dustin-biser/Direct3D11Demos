@@ -27,18 +27,18 @@ TriangleDemo::~TriangleDemo()
 }
 
 //---------------------------------------------------------------------------------------
-void TriangleDemo::LoadContent()
+void TriangleDemo::init()
 {
-	CreateVertexShaderObject();
+	createVertexShaderObject();
 
-	CreatePixelShaderObject();
+	createPixelShaderObject();
 
-	UploadVertexBufferData();
+	uploadVertexBufferData();
 }
 
 
 //---------------------------------------------------------------------------------------
-void TriangleDemo::CreateVertexShaderObject()
+void TriangleDemo::createVertexShaderObject()
 {
 	ComPtr<ID3DBlob> vsBlob; // Vertex Shader Blob.
 
@@ -67,7 +67,7 @@ void TriangleDemo::CreateVertexShaderObject()
 }
 
 //---------------------------------------------------------------------------------------
-void TriangleDemo::CreatePixelShaderObject()
+void TriangleDemo::createPixelShaderObject()
 {
 	ComPtr<ID3DBlob> psBlob;
 
@@ -82,7 +82,7 @@ void TriangleDemo::CreatePixelShaderObject()
 }
 
 //---------------------------------------------------------------------------------------
-void TriangleDemo::UploadVertexBufferData()
+void TriangleDemo::uploadVertexBufferData()
 {
 	XMFLOAT3 vertices[] = {
 		XMFLOAT3(-0.5f, -0.5f, 0.0f),
@@ -107,19 +107,13 @@ void TriangleDemo::UploadVertexBufferData()
 }
 
 //---------------------------------------------------------------------------------------
-void TriangleDemo::UnloadContent()
+void TriangleDemo::appLogic(float dt)
 {
 
 }
 
 //---------------------------------------------------------------------------------------
-void TriangleDemo::Update(float dt)
-{
-
-}
-
-//---------------------------------------------------------------------------------------
-void TriangleDemo::Render()
+void TriangleDemo::render()
 {
 	if (!m_d3dContext) return;
 
@@ -140,4 +134,10 @@ void TriangleDemo::Render()
 
 	// Swap the back and front buffers.
 	m_swapChain->Present(0, 0);
+}
+
+//---------------------------------------------------------------------------------------
+void TriangleDemo::shutdown()
+{
+
 }

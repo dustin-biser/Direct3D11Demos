@@ -15,17 +15,15 @@ public:
 
 protected:
 
-	void CreateVertexShaderObject();
-
-	void CreatePixelShaderObject();
-
-	void UploadVertexBufferData();
+	void createVertexShaderObject();
+	void createPixelShaderObject();
+	void uploadVertexBufferData();
 
 	//-- Inherited from Dx11DemoBase:
-	void LoadContent() override;
-	void UnloadContent() override;
-	void Update(float dt) override;
-	void Render() override;
+	void init() override;
+	void appLogic(float dt) override;
+	void render() override;
+	void shutdown() override;
 
 
 	//-- Shader Objects:
