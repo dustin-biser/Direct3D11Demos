@@ -20,6 +20,12 @@ protected:
 	void appLogic(float dt) override;
 	void render() override;
 	void shutdown() override;
+	bool keyInputEvent( 
+		HWND hWindow,
+		UINT message,
+		WPARAM wParam,
+		LPARAM lParam
+	) override;
 
 
 	//-- Shader Objects:

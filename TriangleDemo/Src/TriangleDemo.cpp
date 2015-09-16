@@ -7,6 +7,9 @@
 #include <DirectXMath.h>
 using namespace DirectX;
 
+#include <iostream>
+using namespace std;
+
 
 //---------------------------------------------------------------------------------------
 TriangleDemo::~TriangleDemo()
@@ -109,6 +112,7 @@ void TriangleDemo::uploadVertexBufferData()
 void TriangleDemo::appLogic(float dt)
 {
 
+
 }
 
 //---------------------------------------------------------------------------------------
@@ -139,4 +143,25 @@ void TriangleDemo::render()
 void TriangleDemo::shutdown()
 {
 
+}
+
+//---------------------------------------------------------------------------------------
+bool TriangleDemo::keyInputEvent(
+	HWND hWindow,
+	UINT message,
+	WPARAM wParam,
+	LPARAM lParam
+) {
+	bool eventHandled(false);
+
+	switch (wParam) {
+	case 'A':
+		cout << "A Key Pressed" << endl;
+		eventHandled = true;
+		break;
+	default:
+		break;
+	}
+
+	return eventHandled;
 }

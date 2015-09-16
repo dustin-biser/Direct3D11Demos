@@ -28,19 +28,21 @@ public:
 protected:
 	Dx11DemoBase() = default; // Prevent direct construction
 
-	void initBase();
-
-	static LRESULT CALLBACK WindowProc (
-		HWND hWnd,
-		UINT message,
-		WPARAM wParam,
-		LPARAM lParam
-	);
-
+	//-- Virtual methods:
+	//-- Override within derived classes.
 	virtual void init();
 	virtual void appLogic(float dt);
 	virtual void render();
 	virtual void shutdown();
+
+	//-- Virtual CallBack methods:
+	//-- Override within derived classes.
+	virtual bool keyInputEvent(
+		HWND hWindow,
+		UINT message,
+		WPARAM wParam,
+		LPARAM lParam
+	);
 
 	static std::shared_ptr<Dx11DemoBase> m_pInstance;
 
@@ -61,6 +63,24 @@ protected:
 	ComPtr<ID3D11DeviceContext> m_d3dContext;
 	ComPtr<ID3D11RenderTargetView> m_backBufferTarget; 
 
+
 private:
+	void initBase();
+
 	void MainApplicationLoop(MSG & msg);
+
+	static LRESULT CALLBACK WindowProc (
+		HWND hWnd,
+		UINT message,
+		WPARAM wParam,
+		LPARAM lParam
+	);
+
+	static void keyInputCallBack (
+		HWND hWindow,
+		UINT message,
+		WPARAM wParam,
+		LPARAM lParam
+	);
+
 };

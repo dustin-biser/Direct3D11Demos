@@ -184,7 +184,7 @@ void Dx11DemoBase::MainApplicationLoop(MSG & msg) {
 		frameStartTime = steady_clock::now();
 
 		if (PeekMessage(&msg, 0, 0, 0, PM_REMOVE)) {
-			// Translates input virtual key messages to ASCII char key messages.
+			// Translates input virtual key message to character message.
 			TranslateMessage(&msg);
 
 			// Dispatch message to our registered Window Procedure Callback function.
@@ -322,9 +322,44 @@ void Dx11DemoBase::render()
 
 }
 
+
+//---------------------------------------------------------------------------------------
+void Dx11DemoBase::keyInputCallBack (
+	HWND hWindow,
+	UINT message,
+	WPARAM wParam,
+	LPARAM lParam
+) {
+	if (!getInstance()->keyInputEvent(hWindow, message, wParam, lParam)) {
+		// If derived class does not handle event, send to base class.
+		getInstance()->Dx11DemoBase::keyInputEvent(hWindow, message, wParam, lParam);
+	}
+}
+
+//---------------------------------------------------------------------------------------
+bool Dx11DemoBase::keyInputEvent (
+	HWND hWindow,
+	UINT message,
+	WPARAM wParam,
+	LPARAM lParam
+) {
+	bool eventHandled(false);
+
+	switch (wParam) {
+	case VK_ESCAPE:
+		PostQuitMessage(0);
+		eventHandled = true;
+		break;
+	default:
+		break;
+	}
+
+	return eventHandled;
+}
+
 //---------------------------------------------------------------------------------------
 LRESULT CALLBACK Dx11DemoBase::WindowProc(
-	HWND hwnd,
+	HWND hWindow,
 	UINT message,
 	WPARAM wParam,
 	LPARAM lParam
@@ -334,8 +369,8 @@ LRESULT CALLBACK Dx11DemoBase::WindowProc(
 
 	switch (message) {
 	case WM_PAINT:
-		hDC = BeginPaint(hwnd, &paintStruct);
-		EndPaint(hwnd, &paintStruct);
+		hDC = BeginPaint(hWindow, &paintStruct);
+		EndPaint(hWindow, &paintStruct);
 		break;
 
 	case WM_DESTROY: 
@@ -343,10 +378,15 @@ LRESULT CALLBACK Dx11DemoBase::WindowProc(
 		PostQuitMessage(0);
 		break;
 
+	case WM_KEYDOWN:
+		keyInputCallBack(hWindow, message, wParam, lParam);
+		break;
+
 	default:
 		// Pass unprocessed messages to the default windows procedure callback.
-		return DefWindowProc(hwnd, message, wParam, lParam);
+		return DefWindowProc(hWindow, message, wParam, lParam);
 	}
+
 
 	return 0;
 }
