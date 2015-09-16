@@ -112,7 +112,6 @@ void TriangleDemo::uploadVertexBufferData()
 void TriangleDemo::appLogic(float dt)
 {
 
-
 }
 
 //---------------------------------------------------------------------------------------
@@ -154,13 +153,17 @@ bool TriangleDemo::keyInputEvent(
 ) {
 	bool eventHandled(false);
 
-	switch (wParam) {
-	case 'A':
-		cout << "A Key Pressed" << endl;
-		eventHandled = true;
-		break;
-	default:
-		break;
+	if (message == WM_KEYDOWN) {
+		if (wParam == 'A') {
+			cout << "A Key Pressed" << endl;
+			eventHandled = true;
+		}
+	}
+	if (message == WM_KEYUP) {
+		if (wParam == 'A') {
+			cout << "A Key Released" << endl;
+			eventHandled = true;
+		}
 	}
 
 	return eventHandled;

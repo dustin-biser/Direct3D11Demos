@@ -378,11 +378,9 @@ LRESULT CALLBACK Dx11DemoBase::WindowProc(
 		PostQuitMessage(0);
 		break;
 
-	case WM_KEYDOWN:
-		keyInputCallBack(hWindow, message, wParam, lParam);
-		break;
-
 	default:
+		keyInputCallBack(hWindow, message, wParam, lParam);
+
 		// Pass unprocessed messages to the default windows procedure callback.
 		return DefWindowProc(hWindow, message, wParam, lParam);
 	}
