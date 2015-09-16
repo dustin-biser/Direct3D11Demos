@@ -327,12 +327,23 @@ void Dx11DemoBase::render()
 void Dx11DemoBase::keyInputCallBack (
 	HWND hWindow,
 	UINT message,
-	WPARAM wParam,
-	LPARAM lParam
+	WPARAM wParam
 ) {
-	if (!getInstance()->keyInputEvent(hWindow, message, wParam, lParam)) {
+	if (!getInstance()->keyInputEvent(hWindow, message, wParam)) {
 		// If derived class does not handle event, send to base class.
-		getInstance()->Dx11DemoBase::keyInputEvent(hWindow, message, wParam, lParam);
+		getInstance()->Dx11DemoBase::keyInputEvent(hWindow, message, wParam);
+	}
+}
+
+//---------------------------------------------------------------------------------------
+void Dx11DemoBase::mouseButtonCallBack (
+	HWND hWindow,
+	UINT message,
+	WPARAM wParam
+) {
+	if (!getInstance()->mouseButtonEvent(hWindow, message, wParam)) {
+		// If derived class does not handle event, send to base class.
+		getInstance()->Dx11DemoBase::mouseButtonEvent(hWindow, message, wParam);
 	}
 }
 
@@ -340,12 +351,11 @@ void Dx11DemoBase::keyInputCallBack (
 bool Dx11DemoBase::keyInputEvent (
 	HWND hWindow,
 	UINT message,
-	WPARAM wParam,
-	LPARAM lParam
+	WPARAM vKey
 ) {
 	bool eventHandled(false);
 
-	switch (wParam) {
+	switch (vKey) {
 	case VK_ESCAPE:
 		PostQuitMessage(0);
 		eventHandled = true;
@@ -355,6 +365,16 @@ bool Dx11DemoBase::keyInputEvent (
 	}
 
 	return eventHandled;
+}
+
+//---------------------------------------------------------------------------------------
+bool Dx11DemoBase::mouseButtonEvent (
+	HWND hWindow,
+	UINT message,
+	WPARAM wParam
+) {
+	// Override in derived classes.
+	return false;
 }
 
 //---------------------------------------------------------------------------------------
@@ -378,9 +398,23 @@ LRESULT CALLBACK Dx11DemoBase::WindowProc(
 		PostQuitMessage(0);
 		break;
 
-	default:
-		keyInputCallBack(hWindow, message, wParam, lParam);
+	case WM_KEYUP:
+	case WM_KEYDOWN:
+		keyInputCallBack(hWindow, message, wParam);
+		break;
 
+	case WM_LBUTTONUP:
+	case WM_LBUTTONDOWN:
+	case WM_RBUTTONUP:
+	case WM_RBUTTONDOWN:
+	case WM_MBUTTONUP:
+	case WM_MBUTTONDOWN:
+	case WM_XBUTTONUP:
+	case WM_XBUTTONDOWN:
+		mouseButtonCallBack(hWindow, message, wParam);
+		break;
+
+	default:
 		// Pass unprocessed messages to the default windows procedure callback.
 		return DefWindowProc(hWindow, message, wParam, lParam);
 	}

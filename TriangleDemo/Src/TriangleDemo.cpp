@@ -148,22 +148,36 @@ void TriangleDemo::shutdown()
 bool TriangleDemo::keyInputEvent(
 	HWND hWindow,
 	UINT message,
-	WPARAM wParam,
-	LPARAM lParam
+	WPARAM vKey
 ) {
 	bool eventHandled(false);
 
 	if (message == WM_KEYDOWN) {
-		if (wParam == 'A') {
+		if (vKey == 'A') {
 			cout << "A Key Pressed" << endl;
 			eventHandled = true;
 		}
 	}
 	if (message == WM_KEYUP) {
-		if (wParam == 'A') {
+		if (vKey == 'A') {
 			cout << "A Key Released" << endl;
 			eventHandled = true;
 		}
+	}
+
+	return eventHandled;
+}
+
+//---------------------------------------------------------------------------------------
+bool TriangleDemo::mouseButtonEvent (
+	HWND hWindow,
+	UINT message,
+	WPARAM wParam
+) {
+	bool eventHandled(false);
+	if (message == WM_LBUTTONDOWN) {
+		cout << "Left MouseButton Down" << endl;
+		eventHandled = true;
 	}
 
 	return eventHandled;

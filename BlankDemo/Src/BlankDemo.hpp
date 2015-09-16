@@ -23,4 +23,10 @@ public:
 protected:
 	BlankDemo() = default; // Prevent direct construction
 
+	virtual void init() override;
+
+	virtual bool keyInputEvent(HWND hWindow, UINT message, WPARAM vKey) override;
+
+	virtual bool mouseButtonEvent(HWND hWindow, UINT message, WPARAM wParam) override;
+
 };

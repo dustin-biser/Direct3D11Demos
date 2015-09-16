@@ -45,3 +45,18 @@ void BlankDemo::shutdown()
 {
 
 }
+
+void BlankDemo::init()
+{
+
+}
+
+bool BlankDemo::keyInputEvent(HWND hWindow, UINT message, WPARAM vKey)
+{
+	return false;
+}
+
+bool BlankDemo::mouseButtonEvent(HWND hWindow, UINT message, WPARAM wParam)
+{
+	return false;
+}

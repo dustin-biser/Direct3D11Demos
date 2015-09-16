@@ -20,11 +20,17 @@ protected:
 	void appLogic(float dt) override;
 	void render() override;
 	void shutdown() override;
+
 	bool keyInputEvent( 
 		HWND hWindow,
 		UINT message,
-		WPARAM wParam,
-		LPARAM lParam
+		WPARAM vKey
+	) override;
+
+	bool mouseButtonEvent(
+		HWND hWindow,
+		UINT message,
+		WPARAM wParam
 	) override;
 
 

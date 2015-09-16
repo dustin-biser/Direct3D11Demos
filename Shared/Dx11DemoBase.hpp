@@ -40,8 +40,12 @@ protected:
 	virtual bool keyInputEvent(
 		HWND hWindow,
 		UINT message,
-		WPARAM wParam,
-		LPARAM lParam
+		WPARAM vKey
+	);
+	virtual bool mouseButtonEvent(
+		HWND hWindow,
+		UINT message,
+		WPARAM wParam
 	);
 
 	static std::shared_ptr<Dx11DemoBase> m_pInstance;
@@ -79,8 +83,13 @@ private:
 	static void keyInputCallBack (
 		HWND hWindow,
 		UINT message,
-		WPARAM wParam,
-		LPARAM lParam
+		WPARAM wParam
+	);
+
+	static void mouseButtonCallBack (
+		HWND hWindow,
+		UINT message,
+		WPARAM wParam
 	);
 
 };
