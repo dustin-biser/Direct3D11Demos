@@ -4,16 +4,12 @@
 
 class TriangleDemo : public Dx11DemoBase {
 public:
-	TriangleDemo (
-		uint width,
-		uint height,
-		std::string name,
-		float desiredFramesPerSecond = 60.0f
-	);
-
 	virtual ~TriangleDemo();
 
+	static std::shared_ptr<Dx11DemoBase> getInstance();
+
 protected:
+	TriangleDemo() = default; // Prevent direct construction
 
 	void createVertexShaderObject();
 	void createPixelShaderObject();
@@ -32,5 +28,4 @@ protected:
 
 	ComPtr<ID3D11InputLayout> m_inputLayout;
 	ComPtr<ID3D11Buffer> m_vertexBuffer;
-
 };

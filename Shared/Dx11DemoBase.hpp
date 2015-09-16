@@ -3,6 +3,7 @@
 #include "NumericalTypes.hpp"
 
 #include <string>
+#include <memory>
 
 #include <wrl.h>
 #include <d3d11.h>
@@ -11,21 +12,22 @@ using namespace Microsoft::WRL;
 
 class Dx11DemoBase {
 public:
-	Dx11DemoBase (
+	virtual ~Dx11DemoBase();
+
+	static std::shared_ptr<Dx11DemoBase> getInstance();
+
+	int run (
+		HINSTANCE hInstance,
+		int nCmdShow,
 		uint width,
 		uint height,
 		std::string windowTitle,
 		float desiredFramesPerSecond = 60.0f
 	);
 
-	virtual ~Dx11DemoBase();
-
-	int run (
-		HINSTANCE hInstance,
-		int nCmdShow
-	);
-
 protected:
+	Dx11DemoBase() = default; // Prevent direct construction
+
 	void initBase();
 
 	static LRESULT CALLBACK WindowProc (
@@ -36,9 +38,11 @@ protected:
 	);
 
 	virtual void init();
-	virtual void appLogic(float dt) = 0;
-	virtual void render() = 0;
-	virtual void shutdown() = 0;
+	virtual void appLogic(float dt);
+	virtual void render();
+	virtual void shutdown();
+
+	static std::shared_ptr<Dx11DemoBase> m_pInstance;
 
 	//-- Viewport dimensions:
 	uint m_width;

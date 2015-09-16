@@ -4,19 +4,18 @@
 
 
 //---------------------------------------------------------------------------------------
-BlankDemo::BlankDemo(
-	uint width,
-	uint height, 
-	std::string name
-) : 
-	Dx11DemoBase(width, height, name)
-{
+BlankDemo::~BlankDemo() {
 
 }
 
-//---------------------------------------------------------------------------------------
-BlankDemo::~BlankDemo() {
+std::shared_ptr<Dx11DemoBase> BlankDemo::getInstance()
+{
+	static Dx11DemoBase * staticInstance = new BlankDemo();
+	if (m_pInstance == nullptr) {
+		m_pInstance = std::shared_ptr<Dx11DemoBase>(staticInstance);
+	}
 
+	return m_pInstance;
 }
 
 //---------------------------------------------------------------------------------------

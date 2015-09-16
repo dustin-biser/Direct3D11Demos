@@ -31,22 +31,14 @@ using std::chrono::duration_cast;
 static void centerWindow(HWND hWindow);
 
 
-//---------------------------------------------------------------------------------------
-Dx11DemoBase::Dx11DemoBase (
-	uint width, 
-	uint height,
-	std::string windowTitle,
-	float desiredFramesPerSecond
-) : 
-	  m_width(width),
-	  m_height(height),
-	  m_windowTitle(windowTitle),
-	  m_desiredFramesPerSecond(desiredFramesPerSecond),
-	  m_driverType(D3D_DRIVER_TYPE_NULL),
-	  m_featureLevel(D3D_FEATURE_LEVEL_11_0)
+void Dx11DemoBase::shutdown()
 {
 
 }
+
+// Initialize static members:
+std::shared_ptr<Dx11DemoBase> Dx11DemoBase::m_pInstance = nullptr;
+
 
 //---------------------------------------------------------------------------------------
 Dx11DemoBase::~Dx11DemoBase() 
@@ -55,10 +47,32 @@ Dx11DemoBase::~Dx11DemoBase()
 }
 
 //---------------------------------------------------------------------------------------
+std::shared_ptr<Dx11DemoBase> Dx11DemoBase::getInstance()
+{
+	static Dx11DemoBase * staticInstance = new Dx11DemoBase();
+	if (m_pInstance == nullptr) {
+		m_pInstance = std::shared_ptr<Dx11DemoBase>(staticInstance);
+	}
+
+	return m_pInstance;
+}
+
+//---------------------------------------------------------------------------------------
 int Dx11DemoBase::run (
 	HINSTANCE hInstance,
-	int nCmdShow
+	int nCmdShow,
+	uint width,
+	uint height,
+	std::string windowTitle,
+	float desiredFramesPerSecond
 ) {
+	m_width = width;
+	m_height = height;
+	m_windowTitle = windowTitle;
+	m_desiredFramesPerSecond = desiredFramesPerSecond;
+	m_driverType = D3D_DRIVER_TYPE_NULL;
+	m_featureLevel = D3D_FEATURE_LEVEL_11_0;
+
 	//-- Use the following code to open a new console window and redirect stdout to it:
 	{
 		// Open a new console window
@@ -137,8 +151,8 @@ static void centerWindow(HWND hWindow) {
 	int screenWidth = GetSystemMetrics(SM_CXSCREEN);
 	int screenHeight = GetSystemMetrics(SM_CYSCREEN);
 
-	int topLeftXPos = (screenWidth - windowWidth) * 0.5f;
-	int topLeftYPos = (screenHeight - windowHeight) * 0.5f;
+	int topLeftXPos = int((screenWidth - windowWidth) * 0.5f);
+	int topLeftYPos = int((screenHeight - windowHeight) * 0.5f);
 
 	MoveWindow(hWindow, topLeftXPos, topLeftYPos, windowWidth, windowHeight, FALSE);
 }
@@ -293,7 +307,19 @@ void Dx11DemoBase::initBase() {
 //---------------------------------------------------------------------------------------
 void Dx11DemoBase::init()
 {
-	// Override with demo specific content loading.
+
+}
+
+//---------------------------------------------------------------------------------------
+void Dx11DemoBase::appLogic(float dt)
+{
+
+}
+
+//---------------------------------------------------------------------------------------
+void Dx11DemoBase::render()
+{
+
 }
 
 //---------------------------------------------------------------------------------------

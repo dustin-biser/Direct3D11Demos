@@ -9,21 +9,20 @@ using namespace DirectX;
 
 
 //---------------------------------------------------------------------------------------
-TriangleDemo::TriangleDemo (
-	uint width,
-	uint height, 
-	std::string name,
-	float desiredFramesPerSecond
-)
-	: Dx11DemoBase(width, height, name, desiredFramesPerSecond)
+TriangleDemo::~TriangleDemo()
 {
 
 }
 
 //---------------------------------------------------------------------------------------
-TriangleDemo::~TriangleDemo()
+std::shared_ptr<Dx11DemoBase> TriangleDemo::getInstance()
 {
+	static Dx11DemoBase * staticInstance = new TriangleDemo();
+	if (m_pInstance == nullptr) {
+		m_pInstance = std::shared_ptr<Dx11DemoBase>(staticInstance);
+	}
 
+	return m_pInstance;
 }
 
 //---------------------------------------------------------------------------------------
