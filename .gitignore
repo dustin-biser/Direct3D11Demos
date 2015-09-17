@@ -1,11 +1,15 @@
 **Debug
 **Release
 **x64
-**.exe
+*.exe
 
 # Visual Studio files
-**.suo
-**.vs
-**.sdf
-**.opensdf
-**.vcxproj.user
+*.suo
+*.vs
+*.sdf
+*.opensdf
+*.vcxproj.user
+
+# Visual Studio profiling
+*.psess
+*.vsp
