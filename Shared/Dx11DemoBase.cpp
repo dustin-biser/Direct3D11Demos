@@ -182,6 +182,7 @@ void Dx11DemoBase::MainApplicationLoop(MSG & msg) {
 
 	while (msg.message != WM_QUIT) {
 		frameStartTime = steady_clock::now();
+		getMousePostion();
 
 		if (PeekMessage(&msg, 0, 0, 0, PM_REMOVE)) {
 			// Translates input virtual key message to character message.
@@ -191,14 +192,24 @@ void Dx11DemoBase::MainApplicationLoop(MSG & msg) {
 			DispatchMessage(&msg);
 		}
 		else {
-			float dt = 0.0f;
 			//-- Call overridden derived-class methods:
+			float dt = 0.0f;
 			appLogic(dt);
 			render();
 		}
 
 		frameLimiter(m_desiredFramesPerSecond, frameStartTime);
 	}
+}
+
+//---------------------------------------------------------------------------------------
+void Dx11DemoBase::getMousePostion()
+{
+	POINT mousePosition;
+	GetCursorPos(&mousePosition);
+
+	m_mousePosition.x = mousePosition.x;
+	m_mousePosition.y = mousePosition.y;
 }
 
 //---------------------------------------------------------------------------------------

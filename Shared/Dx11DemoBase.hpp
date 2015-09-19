@@ -5,6 +5,8 @@
 #include <string>
 #include <memory>
 
+#include <glm/glm.hpp>
+
 #include <wrl.h>
 #include <d3d11.h>
 
@@ -58,6 +60,7 @@ protected:
 	HWND m_hwnd;
 
 	float m_desiredFramesPerSecond;
+	uvec2 m_mousePosition;
 
 	D3D_DRIVER_TYPE m_driverType;
 	D3D_FEATURE_LEVEL m_featureLevel;
@@ -68,10 +71,13 @@ protected:
 	ComPtr<ID3D11RenderTargetView> m_backBufferTarget; 
 
 
+
 private:
 	void initBase();
 
 	void MainApplicationLoop(MSG & msg);
+
+	void getMousePostion();
 
 	static LRESULT CALLBACK WindowProc (
 		HWND hWnd,
