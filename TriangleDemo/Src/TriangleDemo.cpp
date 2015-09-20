@@ -10,6 +10,9 @@ using namespace DirectX;
 #include <iostream>
 using namespace std;
 
+#include <glm/glm.hpp>
+using glm::vec3;
+
 
 //---------------------------------------------------------------------------------------
 TriangleDemo::~TriangleDemo()
@@ -42,16 +45,17 @@ void TriangleDemo::init()
 //---------------------------------------------------------------------------------------
 void TriangleDemo::createVertexShaderObject()
 {
-	ComPtr<ID3DBlob> vsBlob; // Vertex Shader Blob.
+	ComPtr<ID3DBlob> vsByteCode; // For storing Vertex Shader Bytecode.
 
 	CHECK_DX_ERROR (
-		D3DReadFileToBlob(L"VertexShader.cso", &vsBlob);
+		D3DReadFileToBlob(L"VertexShader.cso", &vsByteCode);
 	)
 
 	CHECK_DX_ERROR (
-		m_d3dDevice->CreateVertexShader(vsBlob->GetBufferPointer(),
-			vsBlob->GetBufferSize(), nullptr, m_vertexShader.GetAddressOf());
+		m_d3dDevice->CreateVertexShader(vsByteCode->GetBufferPointer(),
+			vsByteCode->GetBufferSize(), nullptr, m_vertexShader.GetAddressOf());
 	)
+
 
 	D3D11_INPUT_ELEMENT_DESC inputVertexDataLayout;
 	inputVertexDataLayout.SemanticName = "POSITION";
@@ -64,32 +68,32 @@ void TriangleDemo::createVertexShaderObject()
 
 	CHECK_DX_ERROR (
 		m_d3dDevice->CreateInputLayout(&inputVertexDataLayout, 1,
-			vsBlob->GetBufferPointer(), vsBlob->GetBufferSize(), &m_inputLayout);
+			vsByteCode->GetBufferPointer(), vsByteCode->GetBufferSize(), &m_inputLayout);
 	)
 }
 
 //---------------------------------------------------------------------------------------
 void TriangleDemo::createPixelShaderObject()
 {
-	ComPtr<ID3DBlob> psBlob;
+	ComPtr<ID3DBlob> psByteCode;
 
 	CHECK_DX_ERROR (
-		D3DReadFileToBlob(L"PixelShader.cso", &psBlob);
+		D3DReadFileToBlob(L"PixelShader.cso", &psByteCode);
 	)
 
 	CHECK_DX_ERROR (
-		m_d3dDevice->CreatePixelShader(psBlob->GetBufferPointer(),
-			psBlob->GetBufferSize(), nullptr, m_pixelShader.GetAddressOf());
+		m_d3dDevice->CreatePixelShader(psByteCode->GetBufferPointer(),
+			psByteCode->GetBufferSize(), nullptr, m_pixelShader.GetAddressOf());
 	)
 }
 
 //---------------------------------------------------------------------------------------
 void TriangleDemo::uploadVertexBufferData()
 {
-	XMFLOAT3 vertices[] = {
-		XMFLOAT3(-0.5f, -0.5f, 0.0f),
-		XMFLOAT3(0.0f, 0.5f, 0.0f),
-		XMFLOAT3(0.5f, -0.5f, 0.0f)
+	vec3 vertices[] = {
+		vec3(-0.5f, -0.5f, 0.0f),
+		vec3(0.0f, 0.5f, 0.0f),
+		vec3(0.5f, -0.5f, 0.0f)
 	};
 
 	D3D11_BUFFER_DESC vertexBufferDesc;
@@ -124,7 +128,7 @@ void TriangleDemo::render()
 	// Clear the back buffer with the clearColor.
 	m_d3dContext->ClearRenderTargetView(m_backBufferTarget.Get(), clearColor);
 
-	uint stride = sizeof(XMFLOAT3);
+	uint stride = sizeof(vec3);
 	uint offset = 0;
 
 	m_d3dContext->IASetInputLayout(m_inputLayout.Get());
@@ -132,6 +136,7 @@ void TriangleDemo::render()
 		&offset);
 	m_d3dContext->VSSetShader(m_vertexShader.Get(), nullptr, 0);
 	m_d3dContext->PSSetShader(m_pixelShader.Get(), nullptr, 0);
+	m_d3dContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	m_d3dContext->Draw(3, 0);
 
 	// Swap the back and front buffers.

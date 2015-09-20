@@ -18,10 +18,31 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utils", "Utils", "{1CB95889
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External", "External", "{E5311FAE-1740-4D23-A970-101A494860D0}"
 	ProjectSection(SolutionItems) = preProject
+		External\glm\common.hpp = External\glm\common.hpp
 		External\dxerr.cpp = External\dxerr.cpp
 		External\dxerr.h = External\dxerr.h
-		..\Synergy\examples\Utils\GlfwOpenGlWindow.cpp = ..\Synergy\examples\Utils\GlfwOpenGlWindow.cpp
-		..\Synergy\examples\Utils\GlfwOpenGlWindow.hpp = ..\Synergy\examples\Utils\GlfwOpenGlWindow.hpp
+		External\glm\exponential.hpp = External\glm\exponential.hpp
+		External\glm\ext.hpp = External\glm\ext.hpp
+		External\glm\fwd.hpp = External\glm\fwd.hpp
+		External\glm\geometric.hpp = External\glm\geometric.hpp
+		External\glm\glm.hpp = External\glm\glm.hpp
+		External\glm\integer.hpp = External\glm\integer.hpp
+		External\glm\mat2x2.hpp = External\glm\mat2x2.hpp
+		External\glm\mat2x3.hpp = External\glm\mat2x3.hpp
+		External\glm\mat2x4.hpp = External\glm\mat2x4.hpp
+		External\glm\mat3x2.hpp = External\glm\mat3x2.hpp
+		External\glm\mat3x3.hpp = External\glm\mat3x3.hpp
+		External\glm\mat3x4.hpp = External\glm\mat3x4.hpp
+		External\glm\mat4x2.hpp = External\glm\mat4x2.hpp
+		External\glm\mat4x3.hpp = External\glm\mat4x3.hpp
+		External\glm\mat4x4.hpp = External\glm\mat4x4.hpp
+		External\glm\matrix.hpp = External\glm\matrix.hpp
+		External\glm\packing.hpp = External\glm\packing.hpp
+		External\glm\trigonometric.hpp = External\glm\trigonometric.hpp
+		External\glm\vec2.hpp = External\glm\vec2.hpp
+		External\glm\vec3.hpp = External\glm\vec3.hpp
+		External\glm\vec4.hpp = External\glm\vec4.hpp
+		External\glm\vector_relational.hpp = External\glm\vector_relational.hpp
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{8C797171-B054-4B62-8F39-BE7B0F65A6EF}"
@@ -34,9 +55,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BlankDemo", "BlankDemo\BlankDemo.vcxproj", "{1B1CAD8C-EAB8-426A-A4A4-FA686B3A3011}"
 EndProject
 Global
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
