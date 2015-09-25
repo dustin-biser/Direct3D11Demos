@@ -48,6 +48,7 @@ void TriangleDemo::createVertexShaderObject()
 	ComPtr<ID3DBlob> vsByteCode; // For storing Vertex Shader Bytecode.
 
 	CHECK_DX_ERROR (
+		// Read in compiled vertex shader
 		D3DReadFileToBlob(L"VertexShader.cso", &vsByteCode);
 	)
 
