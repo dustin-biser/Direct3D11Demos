@@ -2,18 +2,18 @@
 
 #include <Dx11DemoBase.hpp>
 
-class CubeDemo : public Dx11DemoBase {
+class IndexRenderingDemo : public Dx11DemoBase {
 public:
-	virtual ~CubeDemo();
+	virtual ~IndexRenderingDemo();
 
 	static std::shared_ptr<Dx11DemoBase> getInstance();
 
 protected:
-	CubeDemo() = default; // Prevent direct construction
+	IndexRenderingDemo() = default; // Prevent direct construction
 
 	void createVertexShaderObject();
 	void createPixelShaderObject();
-	void uploadVertexBufferData();
+	void uploadVertexDataToBuffer();
 
 	//-- Inherited from Dx11DemoBase:
 	void init() override;
@@ -40,4 +40,5 @@ protected:
 
 	ComPtr<ID3D11InputLayout> m_inputLayout;
 	ComPtr<ID3D11Buffer> m_vertexBuffer;
+	ComPtr<ID3D11Buffer> m_indexBuffer;
 };

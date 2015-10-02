@@ -1,4 +1,4 @@
-#include "CubeDemo.hpp"
+#include "IndexRenderingDemo.hpp"
 
 #include "Utils/DebugMessage.hpp"
 #include "Utils/CheckDxError.hpp"
@@ -15,15 +15,15 @@ using glm::vec3;
 
 
 //---------------------------------------------------------------------------------------
-CubeDemo::~CubeDemo()
+IndexRenderingDemo::~IndexRenderingDemo()
 {
 
 }
 
 //---------------------------------------------------------------------------------------
-std::shared_ptr<Dx11DemoBase> CubeDemo::getInstance()
+std::shared_ptr<Dx11DemoBase> IndexRenderingDemo::getInstance()
 {
-	static Dx11DemoBase * staticInstance = new CubeDemo();
+	static Dx11DemoBase * staticInstance = new IndexRenderingDemo();
 	if (m_pInstance == nullptr) {
 		m_pInstance = std::shared_ptr<Dx11DemoBase>(staticInstance);
 	}
@@ -32,30 +32,30 @@ std::shared_ptr<Dx11DemoBase> CubeDemo::getInstance()
 }
 
 //---------------------------------------------------------------------------------------
-void CubeDemo::init()
+void IndexRenderingDemo::init()
 {
 	createVertexShaderObject();
 
 	createPixelShaderObject();
 
-	uploadVertexBufferData();
+	uploadVertexDataToBuffer();
 }
 
 
 //---------------------------------------------------------------------------------------
-void CubeDemo::createVertexShaderObject()
+void IndexRenderingDemo::createVertexShaderObject()
 {
 	ComPtr<ID3DBlob> vsByteCode; // For storing Vertex Shader Bytecode.
 
 	CHECK_DX_ERROR (
 		// Read in compiled vertex shader
 		D3DReadFileToBlob(L"VertexShader.cso", &vsByteCode);
-	)
+	);
 
 	CHECK_DX_ERROR (
 		m_d3dDevice->CreateVertexShader(vsByteCode->GetBufferPointer(),
 			vsByteCode->GetBufferSize(), nullptr, m_vertexShader.GetAddressOf());
-	)
+	);
 
 
 	D3D11_INPUT_ELEMENT_DESC inputVertexDataLayout;
@@ -70,57 +70,87 @@ void CubeDemo::createVertexShaderObject()
 	CHECK_DX_ERROR (
 		m_d3dDevice->CreateInputLayout(&inputVertexDataLayout, 1,
 			vsByteCode->GetBufferPointer(), vsByteCode->GetBufferSize(), &m_inputLayout);
-	)
+	);
 }
 
 //---------------------------------------------------------------------------------------
-void CubeDemo::createPixelShaderObject()
+void IndexRenderingDemo::createPixelShaderObject()
 {
 	ComPtr<ID3DBlob> psByteCode;
 
 	CHECK_DX_ERROR (
 		D3DReadFileToBlob(L"PixelShader.cso", &psByteCode);
-	)
+	);
 
 	CHECK_DX_ERROR (
 		m_d3dDevice->CreatePixelShader(psByteCode->GetBufferPointer(),
 			psByteCode->GetBufferSize(), nullptr, m_pixelShader.GetAddressOf());
-	)
+	);
 }
 
 //---------------------------------------------------------------------------------------
-void CubeDemo::uploadVertexBufferData()
+void IndexRenderingDemo::uploadVertexDataToBuffer()
 {
-	vec3 vertices[] = {
-		vec3(-0.5f, -0.5f, 0.0f),
-		vec3(0.0f, 0.5f, 0.0f),
-		vec3(0.5f, -0.5f, 0.0f)
-	};
+	//-- Upload vertex positions to m_vertexBuffer:
+	{
+		vec3 vertices[] = {
+			vec3(-0.5f, -0.5f, 0.0f),
+			vec3(-0.5f, 0.5f, 0.0f),
+			vec3(0.5f, 0.5f, 0.0f),
+			vec3(0.5f, -0.5f, 0.0f),
+		};
 
-	D3D11_BUFFER_DESC vertexBufferDesc;
-	ZeroMemory(&vertexBufferDesc, sizeof(vertexBufferDesc));
-	vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	vertexBufferDesc.ByteWidth = sizeof(vertices);
+		D3D11_BUFFER_DESC vertexBufferDesc;
+		ZeroMemory(&vertexBufferDesc, sizeof(vertexBufferDesc));
+		vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
+		vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+		vertexBufferDesc.ByteWidth = sizeof(vertices);
 
-	D3D11_SUBRESOURCE_DATA initialData;
-	ZeroMemory(&initialData, sizeof(initialData));
-	initialData.pSysMem = vertices;
+		D3D11_SUBRESOURCE_DATA initialData;
+		ZeroMemory(&initialData, sizeof(initialData));
+		initialData.pSysMem = vertices;
 
-	CHECK_DX_ERROR (
-		m_d3dDevice->CreateBuffer(&vertexBufferDesc, &initialData,
-			m_vertexBuffer.GetAddressOf());
-	)
+		CHECK_DX_ERROR(
+			m_d3dDevice->CreateBuffer(&vertexBufferDesc, &initialData,
+				m_vertexBuffer.GetAddressOf());
+		);
+	}
+
+
+	//-- Upload triangle indices to m_indexBuffer:
+	{
+		ushort indices[] = {
+			0,1,2,
+			3,0,2
+		};
+
+		D3D11_BUFFER_DESC indexBufferDesc;
+		ZeroMemory(&indexBufferDesc, sizeof(indexBufferDesc));
+		indexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
+		indexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
+		indexBufferDesc.ByteWidth = sizeof(indices);
+
+		D3D11_SUBRESOURCE_DATA resourceData;
+		ZeroMemory(&resourceData, sizeof(resourceData));
+		resourceData.pSysMem = indices;
+
+		CHECK_DX_ERROR (
+			m_d3dDevice->CreateBuffer(&indexBufferDesc, &resourceData,
+				m_indexBuffer.GetAddressOf());
+		);
+
+	}
+
 }
 
 //---------------------------------------------------------------------------------------
-void CubeDemo::appLogic(float dt)
+void IndexRenderingDemo::appLogic(float dt)
 {
 
 }
 
 //---------------------------------------------------------------------------------------
-void CubeDemo::render()
+void IndexRenderingDemo::render()
 {
 	if (!m_d3dContext) return;
 
@@ -135,23 +165,25 @@ void CubeDemo::render()
 	m_d3dContext->IASetInputLayout(m_inputLayout.Get());
 	m_d3dContext->IASetVertexBuffers(0, 1, m_vertexBuffer.GetAddressOf(), &stride,
 		&offset);
+	m_d3dContext->IASetIndexBuffer(m_indexBuffer.Get(), DXGI_FORMAT_R16_UINT, 0);
 	m_d3dContext->VSSetShader(m_vertexShader.Get(), nullptr, 0);
 	m_d3dContext->PSSetShader(m_pixelShader.Get(), nullptr, 0);
 	m_d3dContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	m_d3dContext->Draw(3, 0);
+
+	m_d3dContext->DrawIndexed(6, 0, 0);
 
 	// Swap the back and front buffers.
 	m_swapChain->Present(0, 0);
 }
 
 //---------------------------------------------------------------------------------------
-void CubeDemo::shutdown()
+void IndexRenderingDemo::shutdown()
 {
 
 }
 
 //---------------------------------------------------------------------------------------
-bool CubeDemo::keyInputEvent(
+bool IndexRenderingDemo::keyInputEvent(
 	HWND hWindow,
 	UINT message,
 	WPARAM vKey
@@ -175,7 +207,7 @@ bool CubeDemo::keyInputEvent(
 }
 
 //---------------------------------------------------------------------------------------
-bool CubeDemo::mouseButtonEvent (
+bool IndexRenderingDemo::mouseButtonEvent (
 	HWND hWindow,
 	UINT message,
 	WPARAM wParam

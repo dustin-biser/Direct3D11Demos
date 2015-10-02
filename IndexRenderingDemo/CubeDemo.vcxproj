@@ -22,7 +22,7 @@
     <ProjectGuid>{CF423A8E-D885-4ABD-BB07-307CB335D9A7}</ProjectGuid>
     <RootNamespace>TriangleDemo</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
-    <ProjectName>CubeDemo</ProjectName>
+    <ProjectName>IndexRenderingDemo</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -155,7 +155,7 @@
     <ClCompile Include="..\External\dxerr.cpp" />
     <ClCompile Include="..\Shared\Dx11DemoBase.cpp" />
     <ClCompile Include="..\Shared\Utils\DebugMessage.cpp" />
-    <ClCompile Include="Src\CubeDemo.cpp" />
+    <ClCompile Include="Src\IndexRenderingDemo.cpp" />
     <ClCompile Include="Src\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -164,7 +164,7 @@
     <ClInclude Include="..\Shared\NumericalTypes.hpp" />
     <ClInclude Include="..\Shared\Utils\CheckDxError.hpp" />
     <ClInclude Include="..\Shared\Utils\DebugMessage.hpp" />
-    <ClInclude Include="Src\CubeDemo.hpp" />
+    <ClInclude Include="Src\IndexRenderingDemo.hpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\PixelShader.hlsl">

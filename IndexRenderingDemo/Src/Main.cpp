@@ -1,11 +1,11 @@
 #include <Windows.h>
 
-#include "CubeDemo.hpp"
+#include "IndexRenderingDemo.hpp"
 
 //---------------------------------------------------------------------------------------
 _Use_decl_annotations_
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
 {
-	std::shared_ptr<Dx11DemoBase> demo = CubeDemo::getInstance();
-	return demo->run (hInstance, nCmdShow, 1024, 768, "Cube Demo - DirectX11");
+	std::shared_ptr<Dx11DemoBase> demo = IndexRenderingDemo::getInstance();
+	return demo->run(hInstance, nCmdShow, 1024, 768, "Index Rendering Demo");
 }
