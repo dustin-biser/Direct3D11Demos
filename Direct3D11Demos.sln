@@ -54,7 +54,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{8C7971
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BlankDemo", "BlankDemo\BlankDemo.vcxproj", "{1B1CAD8C-EAB8-426A-A4A4-FA686B3A3011}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CubeDemo", "CubeDemo\CubeDemo.vcxproj", "{CF423A8E-D885-4ABD-BB07-307CB335D9A7}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IndexRenderingDemo", "IndexRenderingDemo\IndexRendering.vcxproj", "{CF423A8E-D885-4ABD-BB07-307CB335D9A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
