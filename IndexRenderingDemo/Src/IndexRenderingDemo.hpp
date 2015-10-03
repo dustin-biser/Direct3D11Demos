@@ -14,6 +14,7 @@ protected:
 	void createVertexShaderObject();
 	void createPixelShaderObject();
 	void uploadVertexDataToBuffer();
+    void setShaderConstants();
 
 	//-- Inherited from Dx11DemoBase:
 	void init() override;
@@ -41,4 +42,6 @@ protected:
 	ComPtr<ID3D11InputLayout> m_inputLayout;
 	ComPtr<ID3D11Buffer> m_vertexBuffer;
 	ComPtr<ID3D11Buffer> m_indexBuffer;
+	ComPtr<ID3D11Buffer> m_constantBuffer;
 };
+

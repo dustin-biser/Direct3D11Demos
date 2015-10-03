@@ -39,6 +39,8 @@ void IndexRenderingDemo::init()
 	createPixelShaderObject();
 
 	uploadVertexDataToBuffer();
+
+    setShaderConstants();
 }
 
 
@@ -144,8 +146,43 @@ void IndexRenderingDemo::uploadVertexDataToBuffer()
 }
 
 //---------------------------------------------------------------------------------------
-void IndexRenderingDemo::appLogic(float dt)
+void IndexRenderingDemo::setShaderConstants()
 {
+    struct PS_Constant_Buffer
+    {
+       glm::vec4 color;
+    };
+
+    PS_Constant_Buffer psConstData;
+    psConstData.color = glm::vec4(0.8f, 0.4f, 0.4f, 1.0f);
+
+    //-- Fill in buffer description:
+    D3D11_BUFFER_DESC bufferDesc;
+    ZeroMemory(&bufferDesc, sizeof(bufferDesc));
+    bufferDesc.ByteWidth = sizeof(PS_Constant_Buffer);
+    bufferDesc.Usage = D3D11_USAGE_DYNAMIC; // Const Buffer will be updated frequently
+    bufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+    bufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+
+    //-- Fill in sub-resource data:
+    D3D11_SUBRESOURCE_DATA initData;
+    ZeroMemory(&initData, sizeof(initData));
+    initData.pSysMem = &psConstData;
+
+    // Create constant buffer
+    CHECK_DX_ERROR(
+        m_d3dDevice->CreateBuffer(&bufferDesc, &initData, m_constantBuffer.GetAddressOf());
+    );
+
+
+    // Set the Pixel Shader's Constant Buffer
+    m_d3dContext->PSSetConstantBuffers(0, 1, m_constantBuffer.GetAddressOf());
+
+
+}
+
+//---------------------------------------------------------------------------------------
+void IndexRenderingDemo::appLogic (float dt) { 
 
 }
 

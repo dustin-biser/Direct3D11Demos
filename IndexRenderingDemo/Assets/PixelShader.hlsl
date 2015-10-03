@@ -1,5 +1,9 @@
-
-float4 PS_Main (float4 pos : SV_POSITION) : SV_TARGET
+cbuffer PS_Constant_Buffer : register(b0)
 {
-	return float4 (0.8f, 0.4f, 0.4f, 1.0f);
+    float4 color;
+};
+
+float4 PS_Main (in float4 pos : SV_POSITION) : SV_TARGET
+{
+    return color;
 }
