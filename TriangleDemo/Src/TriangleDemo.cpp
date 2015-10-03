@@ -50,12 +50,12 @@ void TriangleDemo::createVertexShaderObject()
 	CHECK_DX_ERROR (
 		// Read in compiled vertex shader
 		D3DReadFileToBlob(L"VertexShader.cso", &vsByteCode);
-	)
+	);
 
 	CHECK_DX_ERROR (
 		m_d3dDevice->CreateVertexShader(vsByteCode->GetBufferPointer(),
 			vsByteCode->GetBufferSize(), nullptr, m_vertexShader.GetAddressOf());
-	)
+	);
 
 
 	D3D11_INPUT_ELEMENT_DESC inputVertexDataLayout;
@@ -70,7 +70,7 @@ void TriangleDemo::createVertexShaderObject()
 	CHECK_DX_ERROR (
 		m_d3dDevice->CreateInputLayout(&inputVertexDataLayout, 1,
 			vsByteCode->GetBufferPointer(), vsByteCode->GetBufferSize(), &m_inputLayout);
-	)
+	);
 }
 
 //---------------------------------------------------------------------------------------
@@ -80,12 +80,12 @@ void TriangleDemo::createPixelShaderObject()
 
 	CHECK_DX_ERROR (
 		D3DReadFileToBlob(L"PixelShader.cso", &psByteCode);
-	)
+	);
 
 	CHECK_DX_ERROR (
 		m_d3dDevice->CreatePixelShader(psByteCode->GetBufferPointer(),
 			psByteCode->GetBufferSize(), nullptr, m_pixelShader.GetAddressOf());
-	)
+	);
 }
 
 //---------------------------------------------------------------------------------------
@@ -110,7 +110,7 @@ void TriangleDemo::uploadVertexBufferData()
 	CHECK_DX_ERROR (
 		m_d3dDevice->CreateBuffer(&vertexBufferDesc, &initialData,
 			m_vertexBuffer.GetAddressOf());
-	)
+	);
 }
 
 //---------------------------------------------------------------------------------------
